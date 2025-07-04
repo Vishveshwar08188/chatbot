@@ -3,8 +3,7 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import torch
 
-# Load TinyLLaMA model and tokenizer
-llm_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+llm_id = "sshleifer/tiny-gpt2"
 tokenizer = AutoTokenizer.from_pretrained(llm_id)
 model = AutoModelForCausalLM.from_pretrained(llm_id)
 
