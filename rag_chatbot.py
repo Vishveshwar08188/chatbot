@@ -3,18 +3,19 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import torch
 
-# Load model and tokenizer
+# Load TinyLLaMA model and tokenizer
 llm_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 tokenizer = AutoTokenizer.from_pretrained(llm_id)
 model = AutoModelForCausalLM.from_pretrained(llm_id)
 
+# Load sentence embedding model
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 def create_vector_store(text_chunks):
     embeddings = embedder.encode(text_chunks)
     index = faiss.IndexFlatL2(embeddings.shape[1])
     index.add(embeddings)
-    return index, text_chunks, embeddings
+    return index, text_chunks
 
 def retrieve_relevant_chunks(query, index, chunks, k=3):
     query_embedding = embedder.encode([query])
